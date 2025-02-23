@@ -1,0 +1,49 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+label {
+    font-size: 18px;
+}
+
+input[type="month"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+canvas {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: block;
+}
+
+#totalEarningsReport, #totalProductsReport {
+    font-weight: bold;
+    font-size: 20px;
+    color: #007bff;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Ventas</title>
+    <link rel="stylesheet" href="css/reportes.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Reportes Mensuales de Ventas</h1>
+    <label for="monthFilter">Selecciona un mes:</label>
+    <input type="month" id="monthFilter">
+    <button id="filterReport">Generar Reporte</button>
+    
+    <h2>Total Vendido: <span id="totalEarningsReport">$0.00</span></h2>
+    <h2>Total Productos Vendidos: <span id="totalProductsReport">0</span></h2>
+    <button id="exportPDF">Exportar a PDF</button>
+
+    
+    <canvas id="barChartReport"></canvas>
+    <canvas id="pieChartReport"></canvas>
+
+    <script src="js/reportes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Dashboard - Inventario de Pescado</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="js/dashboard.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">🐠 Inventario de Pescado</div>
+            <ul class="nav-links">
+                <li><a href="index.html">🏠 Inicio</a></li>
+                <li><a href="reportes.html" class="active">📊 Reportes</a></li>
+                <li><a href="login.html" class="btn btn-login">🔑 Iniciar Sesión</a></li>
+                <button id="logout">Cerrar Sesión</button>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="dashboard">
+            <h1>📊 Panel de Control</h1>
+            
+            <div class="stats">
+                <div class="stat-card">💰 Ganancias Totales: <span id="totalEarnings">$0</span></div>
+                <div class="stat-card">📦 Productos Vendidos: <span id="totalProducts">0</span></div>
+            </div>
+            
+            <div class="charts-container">
+                <canvas id="barChart"></canvas>
+                <canvas id="pieChart"></canvas>
+            </div>
+            
+            <h2>📋 Registro de Ventas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>🆔 ID</th>
+                        <th>📦 Producto</th>
+                        <th>📈 Cantidad</th>
+                        <th>💲 Precio</th>
+                        <th>📅 Fecha</th>
+                        <th>⚙️ Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="salesTableBody">
+                    <!-- Datos de ventas dinámicos -->
+                </tbody>
+            </table>
+
+            <h2>➕ Agregar Venta</h2>
+            <form id="addSaleForm" class="sale-form">
+                <input type="text" id="productName" placeholder="Nombre del Producto" required>
+                <input type="number" id="productQuantity" placeholder="Cantidad" min="1" value="1" required>
+                <input type="number" id="productPrice" placeholder="Precio Unitario ($)" step="0.01" required>
+                <button type="submit">Agregar Venta</button>
+            </form>
+
+            <div class="report-buttons">
+                <button id="saveReport">💾 Guardar Reporte Mensual</button>
+                <button onclick="window.location.href='reportes.html'">📄 Ver Reportes</button>
+                <button id="openCalculator">🧮 Abrir Calculadora</button>
+            </div>
+        </section>
+    </main>
+    
+    <div id="calculatorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCalculator">&times;</span>
+            <h3>🧮 Calculadora</h3>
+            <input type="text" id="calcInput" readonly>
+            <div class="calc-buttons">
+                <button onclick="clearCalc()">C</button>
+                <button onclick="appendCalc('7')">7</button>
+                <button onclick="appendCalc('8')">8</button>
+                <button onclick="appendCalc('9')">9</button>
+                <button onclick="appendCalc('/')">/</button>
+                <button onclick="appendCalc('4')">4</button>
+                <button onclick="appendCalc('5')">5</button>
+                <button onclick="appendCalc('6')">6</button>
+                <button onclick="appendCalc('*')">*</button>
+                <button onclick="appendCalc('1')">1</button>
+                <button onclick="appendCalc('2')">2</button>
+                <button onclick="appendCalc('3')">3</button>
+                <button onclick="appendCalc('-')">-</button>
+                <button onclick="appendCalc('0')">0</button>
+                <button onclick="appendCalc('.')">.</button>
+                <button onclick="calculateResult()">=</button>
+                <button onclick="appendCalc('+')">+</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function appendCalc(value) {
+            document.getElementById("calcInput").value += value;
+        }
+        function clearCalc() {
+            document.getElementById("calcInput").value = "";
+        }
+        function calculateResult() {
+            try {
+                document.getElementById("calcInput").value = eval(document.getElementById("calcInput").value);
+            } catch {
+                document.getElementById("calcInput").value = "Error";
+            }
+        }
+        document.getElementById("openCalculator").addEventListener("click", function() {
+            document.getElementById("calculatorModal").style.display = "block";
+        });
+        document.getElementById("closeCalculator").addEventListener("click", function() {
+            document.getElementById("calculatorModal").style.display = "none";
+        });
+    </script>
+    
+    <footer>
+        <p>&copy; 2025 🐟 Inventario de Pescado. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
