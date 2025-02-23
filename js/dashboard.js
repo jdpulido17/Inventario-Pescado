@@ -83,6 +83,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function deleteSale(index) {
+        let deleteHistory = JSON.parse(localStorage.getItem("deleteHistory")) || [];
+
+        if (!salesData[index]) {
+            console.error("⚠️ El índice de la venta no es válido.");
+            return;
+        }
+
+        const deletedSale = salesData[index];
+
+        if (confirm(`¿Seguro que quieres eliminar la venta de ${deletedSale.product}?`)) {
+            const now = new Date();
+            const deletedRecord = {
+                product: deletedSale.product,
+                quantity: deletedSale.quantity,
+                date: now.toISOString().split("T")[0],
+                time: now.toLocaleTimeString(),
+                user: "Administrador"
+            };
+
+            deleteHistory.push(deletedRecord);
+            localStorage.setItem("deleteHistory", JSON.stringify(deleteHistory));
+
+            salesData.splice(index, 1);
+            saveToLocalStorage();
+
+            renderTable();
+            renderDeleteHistory();
+            updateCharts();
+        }
+    }
+
     function renderTable() {
         salesTableBody.innerHTML = "";
         salesData.forEach((sale, index) => {
@@ -98,26 +130,21 @@ document.addEventListener("DOMContentLoaded", function () {
             salesTableBody.appendChild(row);
         });
 
+        document.querySelectorAll(".delete-sale").forEach(button => {
+            button.addEventListener("click", function () {
+                const index = parseInt(this.getAttribute("data-index"));
+                deleteSale(index);
+            });
+        });
+
         totalEarnings = salesData.reduce((sum, sale) => sum + sale.totalPrice, 0);
         totalProducts = salesData.reduce((sum, sale) => sum + sale.quantity, 0);
         totalEarningsElem.textContent = `$${totalEarnings.toFixed(2)}`;
         totalProductsElem.textContent = totalProducts;
-
-        document.querySelectorAll(".delete-sale").forEach(button => {
-            button.addEventListener("click", function () {
-                const index = parseInt(this.getAttribute("data-index"));
-                if (confirm(`¿Seguro que quieres eliminar la venta de ${salesData[index].product}?`)) {
-                    salesData.splice(index, 1);
-                    saveToLocalStorage();
-                    renderTable();
-                    updateCharts();
-                }
-            });
-        });
     }
 
-    document.getElementById("addSaleForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+    function addSale(event) {
+        event.preventDefault();
         const productName = document.getElementById("productName").value;
         const productQuantity = parseInt(document.getElementById("productQuantity").value);
         const productPrice = parseFloat(document.getElementById("productPrice").value);
@@ -127,11 +154,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName}a ${productPrice} PESOS💵 ?`);
+        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName} a ${productPrice} PESOS💵 ?`);
 
         if (!confirmation) return;
+
         const today = new Date();
         const formattedDate = today.toISOString().split("T")[0];
+
         const existingProduct = salesData.find(sale => sale.product === productName);
 
         if (existingProduct) {
@@ -152,22 +181,59 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCharts();
         document.getElementById("addSaleForm").reset();
         alert(`✅ Venta de ${productQuantity} ${productName} registrada correctamente👌❤️`);
-    });
-    document.getElementById("saveReport").addEventListener("click", function () {
-        if (salesData.length === 0) {
-            alert("⚠️ No hay datos para guardar el reporte.");
+    }
+
+    function renderDeleteHistory() {
+        const deleteHistoryBody = document.getElementById("deleteHistoryBody");
+
+        if (!deleteHistoryBody) {
+            console.error("⚠️ No se encontró el elemento deleteHistoryBody en el HTML.");
             return;
         }
-        setTimeout(() => {
-            alert("✅ Reporte mensual guardado con éxito.");
-        }, 500);
-    });
-    document.getElementById("logout").addEventListener("click", function () {
-        localStorage.removeItem("auth");
-        window.location.href = "index.html";
+
+        let deleteHistory = JSON.parse(localStorage.getItem("deleteHistory")) || [];
+        deleteHistoryBody.innerHTML = "";
+
+        if (deleteHistory.length === 0) {
+            deleteHistoryBody.innerHTML = "<tr><td colspan='6'>No hay eliminaciones registradas.</td></tr>";
+            return;
+        }
+
+        deleteHistory.forEach((record, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${record.product}</td>
+                <td>${record.quantity}</td>
+                <td>${record.date}</td>
+                <td>${record.time}</td>
+                <td>${record.user}</td>
+            `;
+            deleteHistoryBody.appendChild(row);
+        });
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        let salesData = JSON.parse(localStorage.getItem("salesData")) || [];
+    
+        // Función para cerrar sesión
+        function logout() {
+            localStorage.removeItem("userSession");  // Elimina la sesión guardada
+            alert("👋 Sesión cerrada correctamente.");
+            window.location.href = "login.html";  // Redirige a la página de inicio de sesión
+        }
+    
+        // Agregar evento al botón de cerrar sesión
+        const logoutButton = document.getElementById("logoutButton");
+        if (logoutButton) {
+            logoutButton.addEventListener("click", logout);
+        } else {
+            console.warn("⚠️ No se encontró el botón de cerrar sesión en el HTML.");
+        }
     });
     
-    
+    document.getElementById("addSaleForm").addEventListener("submit", addSale);
+
     renderTable();
+    renderDeleteHistory();
     updateCharts();
 });
