@@ -127,7 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName} a ${productPrice} PESOS💵 ?`);
+        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName}a ${productPrice} PESOS💵 ?`);
+
         if (!confirmation) return;
         const today = new Date();
         const formattedDate = today.toISOString().split("T")[0];
