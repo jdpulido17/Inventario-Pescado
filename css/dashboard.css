@@ -1,187 +1,154 @@
-/* Importar fuente */
+/* Estilos generales */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    color: white;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
 }
 
-/* Navegación */
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 15px 30px;
-}
-
-.navbar .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    padding: 15px;
+    background-color: #0277bd;
+    color: white;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
-.nav-links li a {
-    text-decoration: none;
+.nav-links a {
     color: white;
-    font-weight: 600;
-    padding: 10px 15px;
-    transition: 0.3s;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-.nav-links li a:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-}
-
-/* Contenedor principal */
+/* Dashboard */
 .dashboard {
-    max-width: 2000px;  /* Aumenta el ancho para más espacio */
-    margin: 100px auto;  /* Más espacio superior e inferior */
-    padding: 60px;  /* Más espacio interno */
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para mejor contraste */
 }
 
-/* Tarjetas estadísticas */
 .stats {
     display: flex;
-    justify-content: space-around; /* Más espacio entre las tarjetas */
-    margin-bottom: 30px;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .stat-card {
-    flex: 1;
-    padding: 20px; /* Más espacio interno */
-    margin: 15px;
-    background: rgba(255, 255, 255, 0.2);
+    background: white;
+    padding: 15px;
     border-radius: 10px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Gráficos */
 .charts-container {
     display: flex;
-    justify-content: center; /* Centrar los gráficos */
+    justify-content: space-between;
     align-items: center;
-    gap: 40px; /* Más espacio entre gráficos */
+    gap: 20px;
+    flex-wrap: nowrap; /* Evita que se apilen en pantallas grandes */
+}
+
+.charts-container canvas {
+    width: 45% !important; /* Asegura que los gráficos ocupen el mismo espacio */
+    height: auto !important; /* Mantiene la proporción */
+}
+
+
+
+/* Tabla */
+table {
     width: 100%;
-    padding: 40px 20px;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
 }
 
-#barChart, #pieChart {
-    flex: 1;
-    max-width: 50%;  /* Más espacio para cada gráfico */
-    min-width: 350px; /* Evita que sean demasiado pequeños */
-    height: 400px;  /* Mayor altura para detalles */
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
 }
 
-/* Responsive: En pantallas pequeñas, los gráficos se apilan */
-@media (max-width: 992px) {
-    .charts-container {
+table th {
+    background-color: #0277bd;
+    color: white;
+}
+
+/* Formulario */
+.sale-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.sale-form input, .sale-form button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.sale-form button {
+    background-color: #0277bd;
+    color: white;
+    cursor: pointer;
+}
+
+/* Botones de reporte */
+.report-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Modal de Calculadora */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    margin: 10% auto;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .stats, .charts-container {
         flex-direction: column;
         align-items: center;
     }
 
-    #barChart, #pieChart {
-        max-width: 80%;
-        height: auto;
+    .navbar {
+        flex-direction: column;
+        text-align: center;
     }
-}
-
-
-/* Tabla de ventas */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px; /* Más espacio arriba */
-}
-
-thead {
-    background: #1f4068;
-    color: white;
-}
-
-th, td {
-    padding: 12px; /* Más espacio en celdas */
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-tbody tr:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* Pie de página */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    margin-top: 40px; /* Más espacio arriba */
-}
-.sale-form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.sale-form input {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 150px;
-    text-align: center;
-}
-
-.sale-form button {
-    padding: 10px 15px;
-    font-size: 1rem;
-    font-weight: bold;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.sale-form button:hover {
-    background: #45a049;
-}
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-.modal-content {
-    background-color: rgb(194, 44, 44);
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 250px;
-    text-align: center;
-}
-.close {
-    float: right;
-    cursor: pointer;
 }

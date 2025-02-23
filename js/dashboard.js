@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateCharts() {
         const productNames = salesData.map(sale => sale.product);
         const productTotals = salesData.map(sale => sale.totalPrice);
-        const productQuantities = salesData.map(sale => sale.quantity); // Unidades vendidas
+        const productQuantities = salesData.map(sale => sale.quantity);
         const colors = productNames.map(product => assignColor(product));
 
         if (barChart) barChart.destroy();
@@ -47,16 +47,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 }]
             },
             options: {
-                indexAxis: 'y',
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
+                aspectRatio: 2,
+                indexAxis: 'y',
                 plugins: {
-                    legend: { labels: { font: { size: 16 } } },
-                    tooltip: { titleFont: { size: 18 }, bodyFont: { size: 16 } }
+                    legend: { labels: { font: { size: 14 } } },
+                    tooltip: { titleFont: { size: 16 }, bodyFont: { size: 14 } }
                 },
                 scales: {
-                    x: { ticks: { font: { size: 14 } } },
-                    y: { ticks: { font: { size: 14 } } }
+                    x: { ticks: { font: { size: 12 } } },
+                    y: { ticks: { font: { size: 12 } } }
                 }
             }
         });
@@ -66,16 +67,17 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {
                 labels: productNames,
                 datasets: [{
-                    data: productQuantities, // Mostrar unidades vendidas
+                    data: productQuantities,
                     backgroundColor: colors
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
+                aspectRatio: 2,
                 plugins: {
-                    legend: { labels: { font: { size: 18 } } },
-                    tooltip: { titleFont: { size: 18 }, bodyFont: { size: 16 } }
+                    legend: { labels: { font: { size: 14 } } },
+                    tooltip: { titleFont: { size: 16 }, bodyFont: { size: 14 } }
                 }
             }
         });
@@ -83,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderTable() {
         salesTableBody.innerHTML = "";
-
         salesData.forEach((sale, index) => {
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -99,14 +100,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         totalEarnings = salesData.reduce((sum, sale) => sum + sale.totalPrice, 0);
         totalProducts = salesData.reduce((sum, sale) => sum + sale.quantity, 0);
-
         totalEarningsElem.textContent = `$${totalEarnings.toFixed(2)}`;
         totalProductsElem.textContent = totalProducts;
     }
 
     document.getElementById("addSaleForm").addEventListener("submit", function (e) {
         e.preventDefault();
-
         const productName = document.getElementById("productName").value;
         const productQuantity = parseInt(document.getElementById("productQuantity").value);
         const productPrice = parseFloat(document.getElementById("productPrice").value);
@@ -117,8 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const today = new Date();
-        const formattedDate = today.toISOString().split("T")[0]; // Formato YYYY-MM-DD
-
+        const formattedDate = today.toISOString().split("T")[0];
         const existingProduct = salesData.find(sale => sale.product === productName);
 
         if (existingProduct) {
@@ -130,26 +128,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 unitPrice: productPrice,
                 totalPrice: productPrice * productQuantity,
                 quantity: productQuantity,
-                date: formattedDate  // Fecha en formato YYYY-MM-DD
+                date: formattedDate
             });
         }
 
         saveToLocalStorage();
         renderTable();
         updateCharts();
-
         document.getElementById("addSaleForm").reset();
     });
-    
 
     salesTableBody.addEventListener("click", function (e) {
         if (e.target.classList.contains("delete-sale")) {
             const productName = e.target.dataset.id;
             const saleIndex = salesData.findIndex(sale => sale.product === productName);
-
             if (saleIndex !== -1) {
                 salesData.splice(saleIndex, 1);
-
                 saveToLocalStorage();
                 renderTable();
                 updateCharts();
@@ -159,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("logout").addEventListener("click", function () {
         localStorage.removeItem("auth");
-        window.location.href = "index.html"; // O la página de login
+        window.location.href = "index.html";
     });
 
     document.getElementById("saveReport").addEventListener("click", function () {
