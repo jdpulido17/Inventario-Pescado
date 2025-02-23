@@ -136,6 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTable();
         updateCharts();
         document.getElementById("addSaleForm").reset();
+        
+        // Alerta de confirmación
+        alert(`✅ Venta de ${productQuantity} ${productName}(s) registrada correctamente.`);
     });
 
     salesTableBody.addEventListener("click", function (e) {
