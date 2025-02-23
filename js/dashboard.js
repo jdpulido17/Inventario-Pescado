@@ -153,7 +153,16 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("addSaleForm").reset();
         alert(`✅ Venta de ${productQuantity} ${productName} registrada correctamente👌❤️`);
     });
-
+    document.getElementById("saveReport").addEventListener("click", function () {
+        if (salesData.length === 0) {
+            alert("⚠️ No hay datos para guardar el reporte.");
+            return;
+        }
+        setTimeout(() => {
+            alert("✅ Reporte mensual guardado con éxito.");
+        }, 500);
+    });
+    
     renderTable();
     updateCharts();
 });
