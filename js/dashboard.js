@@ -115,6 +115,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName} a ${productPrice }  PESOS💵 ?`);
+        if (!confirmation) return;
         const today = new Date();
         const formattedDate = today.toISOString().split("T")[0];
         const existingProduct = salesData.find(sale => sale.product === productName);
@@ -136,33 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTable();
         updateCharts();
         document.getElementById("addSaleForm").reset();
-        
-        // Alerta de confirmación
-        alert(`✅ Venta de ${productQuantity} ${productName}(s) registrada correctamente.`);
-    });
-
-    salesTableBody.addEventListener("click", function (e) {
-        if (e.target.classList.contains("delete-sale")) {
-            const productName = e.target.dataset.id;
-            const saleIndex = salesData.findIndex(sale => sale.product === productName);
-            if (saleIndex !== -1) {
-                salesData.splice(saleIndex, 1);
-                saveToLocalStorage();
-                renderTable();
-                updateCharts();
-            }
-        }
-    });
-
-    document.getElementById("logout").addEventListener("click", function () {
-        localStorage.removeItem("auth");
-        window.location.href = "index.html";
-    });
-
-    document.getElementById("saveReport").addEventListener("click", function () {
-        setTimeout(() => {
-            alert("✅ Reporte mensual guardado con éxito.");
-        }, 500);
+        alert(`✅ Venta de ${productQuantity} ${productName} registrado correctamente👌❤️`);
     });
 
     renderTable();
