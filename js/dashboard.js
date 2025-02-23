@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${sale.quantity}</td>
                 <td>$${sale.totalPrice.toFixed(2)}</td>
                 <td>${sale.date}</td>
-                <td><button class="delete-sale" data-id="${sale.product}">❌ Eliminar</button></td>
+                <td><button class="delete-sale" data-index="${index}">❌ Eliminar</button></td>
             `;
             salesTableBody.appendChild(row);
         });
@@ -102,6 +102,18 @@ document.addEventListener("DOMContentLoaded", function () {
         totalProducts = salesData.reduce((sum, sale) => sum + sale.quantity, 0);
         totalEarningsElem.textContent = `$${totalEarnings.toFixed(2)}`;
         totalProductsElem.textContent = totalProducts;
+
+        document.querySelectorAll(".delete-sale").forEach(button => {
+            button.addEventListener("click", function () {
+                const index = parseInt(this.getAttribute("data-index"));
+                if (confirm(`¿Seguro que quieres eliminar la venta de ${salesData[index].product}?`)) {
+                    salesData.splice(index, 1);
+                    saveToLocalStorage();
+                    renderTable();
+                    updateCharts();
+                }
+            });
+        });
     }
 
     document.getElementById("addSaleForm").addEventListener("submit", function (e) {
@@ -115,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName} a ${productPrice }  PESOS💵 ?`);
+        const confirmation = confirm(`¿Deseas agregar la venta de ${productQuantity} ${productName} a ${productPrice} PESOS💵 ?`);
         if (!confirmation) return;
         const today = new Date();
         const formattedDate = today.toISOString().split("T")[0];
