@@ -162,6 +162,11 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("✅ Reporte mensual guardado con éxito.");
         }, 500);
     });
+    document.getElementById("logout").addEventListener("click", function () {
+        localStorage.removeItem("auth");
+        window.location.href = "index.html";
+    });
+    
     
     renderTable();
     updateCharts();
