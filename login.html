@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script defer src="js/login.js"></script>
+    <script defer src="js/auth.js"></script> <!-- Usa `auth.js` en lugar de `login.js` -->
 </head>
 <body>
     <div class="login-container">
@@ -23,13 +23,24 @@
                 <label for="password">🔒 Contraseña</label>
                 <div class="password-container">
                     <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña" autocomplete="new-password">
-                    <span class="toggle-password">👁️</span>
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
                 </div>
             </div>
 
             <button type="submit" class="btn-primary">✅ Ingresar</button>
         </form>
-        <p>¿No tienes una cuenta? <a href="#">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a></p>
     </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>

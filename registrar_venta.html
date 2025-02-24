@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Registrar Venta</title>
+    <link rel="stylesheet" href="css/venta.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">🐠 Inventario de Pescado</div>
+            <ul class="nav-links">
+                <li><a href="index.html">🏠 Inicio</a></li>
+                <li><a href="dashboard.html">📊 Dashboard</a></li>
+                <li><a href="login.html" class="btn btn-login">🔑 Iniciar Sesión</a></li>
+                <button id="logout">Cerrar Sesión</button>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="dashboard">
+            <h1>🛒 Registrar Venta</h1>
+            <form id="addSaleForm" class="sale-form">
+                <input type="text" id="productName" placeholder="Nombre del Producto" required>
+                <input type="number" id="productQuantity" placeholder="Cantidad" min="1" value="1" required>
+                <input type="number" id="productPrice" placeholder="Precio Unitario ($)" step="0.01" required>
+                <button type="submit">Agregar Venta</button>
+            </form>
+
+            <h2>📋 Ventas Registradas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>🆔 ID</th>
+                        <th>📦 Producto</th>
+                        <th>📈 Cantidad</th>
+                        <th>💲 Precio</th>
+                        <th>📅 Fecha</th>
+                        <th>⏰ Hora</th>
+                        <th>👤 Registrado Por</th>
+                        <th>❌ Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody id="salesTableBody">
+                    <!-- Datos de ventas dinámicos -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 🐟 Inventario de Pescado. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/ventas.js"></script>
+</body>
+</html>

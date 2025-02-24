@@ -47,31 +47,25 @@
                         <th>📈 Cantidad</th>
                         <th>💲 Precio</th>
                         <th>📅 Fecha</th>
+                        <th>🕒 Hora</th>
+                        <th>🕒 Usuario</th>
                         <th>⚙️ Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="salesTableBody">
-                    <!-- Datos de ventas dinámicos -->
                 </tbody>
             </table>
-
-            <h2>➕ Agregar Venta</h2>
-            <form id="addSaleForm" class="sale-form">
-                <input type="text" id="productName" placeholder="Nombre del Producto" required>
-                <input type="number" id="productQuantity" placeholder="Cantidad" min="1" value="1" required>
-                <input type="number" id="productPrice" placeholder="Precio Unitario ($)" step="0.01" required>
-                <button type="submit">Agregar Venta</button>
-            </form>
 
             <div class="report-buttons">
                 <button id="saveReport">💾 Guardar Reporte Mensual</button>
                 <button onclick="window.location.href='reportes.html'">📄 Ver Reportes</button>
                 <button id="openCalculator">🧮 Abrir Calculadora</button>
             </div>
+            <h2>🗑️ Historial de Eliminaciones</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Fecha</th>
@@ -133,6 +127,27 @@
         document.getElementById("closeCalculator").addEventListener("click", function() {
             document.getElementById("calculatorModal").style.display = "none";
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const logoutButton = document.getElementById("logout");
+        
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    localStorage.removeItem("loggedInUser"); // Eliminar datos del usuario
+                    sessionStorage.setItem("sessionClosed", "true"); // Indicar que se cerró sesión
+                    window.location.href = "login.html"; // Redirigir al login
+                });
+            }
+        
+            // Evitar regresar después de cerrar sesión
+            if (sessionStorage.getItem("sessionClosed") === "true") {
+                sessionStorage.removeItem("sessionClosed"); // Limpiar el flag
+                history.replaceState(null, null, location.href); // Reemplazar historial
+                window.addEventListener("popstate", function () {
+                    window.location.href = "login.html"; // Redirigir al login si intentan volver
+                });
+            }
+        });
+        
     </script>
     
     <footer>
