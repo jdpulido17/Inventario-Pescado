@@ -127,26 +127,7 @@
         document.getElementById("closeCalculator").addEventListener("click", function() {
             document.getElementById("calculatorModal").style.display = "none";
         });
-        document.addEventListener("DOMContentLoaded", function () {
-            const logoutButton = document.getElementById("logout");
         
-            if (logoutButton) {
-                logoutButton.addEventListener("click", function () {
-                    localStorage.removeItem("loggedInUser"); // Eliminar datos del usuario
-                    sessionStorage.setItem("sessionClosed", "true"); // Indicar que se cerró sesión
-                    window.location.href = "login.html"; // Redirigir al login
-                });
-            }
-        
-            // Evitar regresar después de cerrar sesión
-            if (sessionStorage.getItem("sessionClosed") === "true") {
-                sessionStorage.removeItem("sessionClosed"); // Limpiar el flag
-                history.replaceState(null, null, location.href); // Reemplazar historial
-                window.addEventListener("popstate", function () {
-                    window.location.href = "login.html"; // Redirigir al login si intentan volver
-                });
-            }
-        });
         
     </script>
     
